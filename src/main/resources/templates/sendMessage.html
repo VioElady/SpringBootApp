@@ -1,0 +1,141 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style> body {font-family: Arial, Helvetica, sans-serif;}
+
+    /* The Modal (background) */
+    .modal {
+        display: none;
+        /* Hidden by default */
+        position: fixed;
+        /* Stay in place */
+        z-index: 1;
+        /* Sit on top */
+        padding-top: 100px;
+        /* Location of the box */
+        left: 0;   top: 0;   width: 100%;
+        /* Full width */
+        height: 100%;
+        /* Full height */
+        overflow: auto;
+        /* Enable scroll if needed */
+        background-color: rgb(0,0,0);
+        /* Fallback color */
+        background-color: rgba(0,0,0,0.4);
+        /* Black w/ opacity */
+    }
+
+    /* Modal Content */
+    .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+    }
+
+    /* The Close Button */
+    .close {
+        color: #aaaaaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover, .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+    .label_file {
+        background-color: indigo;
+        color: white;
+        padding: 0.5rem;
+        font-family: sans-serif;
+        border-radius: 0.3rem;
+        cursor: pointer;
+        margin-top: 1rem;
+    }
+
+    #file-chosen{
+        margin-left: 0.3rem;
+        font-family: sans-serif;
+    }
+    </style>
+
+</head>
+<body>
+<div>
+    <form th:method="POST" th:action="@{/}" th:object="${mail}" class="form-container">
+        <h1>Send Message</h1>
+
+        <label for="to"><b>To</b></label>
+        <br>
+        <input type="text" th:field="*{to}" placeholder="To" name="to" id="to" required>
+        <br>
+        <label for="subject"><b>Subject</b></label>
+        <br>
+        <input type="text" th:field="*{subject}" placeholder="Enter Subject" name="subject" id="subject" required>
+        <br>
+        <label for="message"><b>Message</b></label>
+        <br>
+        <!--        <input type="text" th:field="*{message}" placeholder="Enter message" name="message" id="message" required>-->
+        <textarea  th:field="*{message}" placeholder="Enter message" name="message" id="message" required></textarea>
+        <br>
+        <input type="file" id="actual-btn" hidden/>
+        <label class="label_file" for="actual-btn">Choose File</label>
+        <input  value="No file chosen" th:field="*{attachment}" id="file-chosen" readonly>
+        <br>
+        <button id="myBtn" type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Succes</p>
+        </div>
+    </div>
+
+
+</div>
+<a href="/inbox">Open Inbox</a>
+</body>
+<script>
+    var modal = document.getElementById("myModal");
+    var btn = document.getElementById("myBtn");
+    var span = document.getElementsByClassName("close")[0];
+
+    btn.onclick = function() {   modal.style.display = "block"; }
+
+    span.onclick = function() {   modal.style.display = "none"; }
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        } }
+</script>
+<script>
+    const actualBtn = document.getElementById('actual-btn');
+
+    const fileChosen = document.getElementById('file-chosen');
+    var fileSize = 0;
+
+    actualBtn.addEventListener('change', function(){
+        // fileChosen.textContent = this.files[0].name
+        fileSize = this.files[0].size/1000000;
+        console.log(fileSize)
+        if (fileSize > 2){
+            alert('File-ul introdus depaseste dimensiunea de 2MB')
+        }else {
+            fileChosen.value = this.files[0].name;
+        }
+    })
+
+</script>
+</html>
