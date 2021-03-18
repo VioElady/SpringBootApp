@@ -25,7 +25,7 @@ public class ConnectController {
     @GetMapping
     public String newMessage(Model model) {
         model.addAttribute("mail", new Mail());
-        return "sendMessage";
+        return "message";
     }
 
     @GetMapping("inbox")
@@ -33,7 +33,7 @@ public class ConnectController {
 
         List<MimeMessage> messageList = mailService.getListOfMessages();
         model.addAttribute("messageList", messageList);
-        return "inbox";
+        return "inboxMessage";
     }
 
     @GetMapping("inbox/message/{id}")
@@ -41,7 +41,7 @@ public class ConnectController {
         List<MimeMessage> messageList = mailService.getListOfMessages();
         MimeMessage message = messageList.get(id);
         model.addAttribute("message", message);
-        return "show";
+        return "answer";
     }
 
 
@@ -56,6 +56,6 @@ public class ConnectController {
             mailService.sendEmailWithAttachment();
         }
 
-        return "redirect:/sendMessage";
+        return "message";
     }
 }
