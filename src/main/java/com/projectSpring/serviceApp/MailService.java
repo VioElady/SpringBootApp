@@ -26,7 +26,7 @@ public class MailService {
 
     @Autowired
     private JavaMailSender javaMailSender;
-
+    //Send a normal text email.
     public void sendEmail() {
 
         SimpleMailMessage msg = new SimpleMailMessage();
@@ -37,6 +37,7 @@ public class MailService {
         javaMailSender.send(msg);
 
     }
+    //Send an HTML email and a file attachment.
 
     public void sendEmailWithAttachment() throws MessagingException, IOException {
 
